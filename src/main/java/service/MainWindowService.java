@@ -1,84 +1,54 @@
 package service;
 
-import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.Repo;
 import model.User;
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
+import java.util.Objects;
+import java.util.ResourceBundle;
 
-public class MainWindowService extends Application {
+public class MainWindowService implements Initializable {
     @FXML
     private Label loginLabel;
     @FXML
     private Label nickNameLabel;
     @FXML
     private TableView tableRepos;
-
-    private Pane root;
-    private Stage primaryStage;
-
+    @FXML
+    private ImageView photo;
 
     @Override
-    public void start(Stage primaryStage) {
-        this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("gitPC");
-
-        initRootLayout();
-    }
-
-    public void mainAction(User user) {
-        Platform.runLater(() -> {
-            try {
-                loginLabel.setText(user.getLogin());
-                nickNameLabel.setText(user.getName());
-                GitHubBuilder builder = new GitHubBuilder();
-                Call<List<Repo>> repoCall = builder.getService().getUserRepo(user.getLogin());
-                repoCall.enqueue(new Callback<List<Repo>>() {
-
-                    @Override
-                    public void onResponse(Call<List<Repo>> call, Response<List<Repo>> response) {
-                        List<Repo> repos = response.body();
-                        tableRepos.setItems(getRepoData(repos));
-                    }
-
-                    @Override
-                    public void onFailure(Call<List<Repo>> call, Throwable t) {
-                        System.out.println("Fail");
-                    }
-                });
-                start(Main.getInstance().getStage());
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            initRootLayout();
-        });
-    }
-
-
-    private void initRootLayout() {
+    public void initialize(URL location, ResourceBundle resources) {
+        User user = Main.getInstance().getUser();
+        loginLabel.setText(user.getLogin());
+        nickNameLabel.setText(user.getName());
+        photo.setImage(new Image(user.getAvatarUrl()));
+        GitHubBuilder builder = new GitHubBuilder();
+        Call<List<Repo>> repoCall = builder.getService().getUserRepo(user.getLogin());
+        List<Repo> repos = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("/view/mainWindow.fxml"));
-
-            Scene scene = new Scene(root);
-            primaryStage.setScene(scene);
-            primaryStage.show();
+            repos = repoCall.execute().body();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        if (Objects.nonNull(repos)) {
+            for (Repo r : repos) {
+                System.out.println(r.toString());
+            }
+            tableRepos.setItems(getRepoData(repos));
         }
     }
 
@@ -90,6 +60,4 @@ public class MainWindowService extends Application {
         }
         return repoData;
     }
-
-
 }

@@ -9,7 +9,7 @@ public class User {
     String login;
 
     private
-    String avatarUrl;
+    String avatar_url;
 
     private
     String name;
@@ -24,11 +24,11 @@ public class User {
 
 
     public String getAvatarUrl() {
-        return avatarUrl;
+        return avatar_url;
     }
 
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
+    public void setAvatarUrl(String avatar_url) {
+        this.avatar_url = avatar_url;
     }
 
     public String getName() {
