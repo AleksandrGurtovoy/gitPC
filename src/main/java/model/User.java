@@ -1,33 +1,41 @@
 package model;
 
-import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 @ToString
 public class User {
 
-    private @Getter
-    @Setter
+    private
     String login;
 
-    private @Getter
-    @Setter
-    Integer id;
-
-    private @Getter
-    @Setter
+    private
     String avatarUrl;
 
-    private @Getter
-    @Setter
-    String gravatarId;
+    private
+    String name;
 
-    private @Getter
-    @Setter
-    String url;
+    public String getLogin() {
+        return login;
+    }
 
-    private @Getter
-    @Setter
-    String htmlUrl;
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

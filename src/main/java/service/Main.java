@@ -9,9 +9,14 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class Main extends Application {
+    private static Main instance;
 
     private Stage primaryStage;
     private BorderPane rootLayout;
+
+    public Main(){
+        instance = this;
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -33,12 +38,16 @@ public class Main extends Application {
         }
     }
 
-    public Stage getPrimaryStage() {
+    public static Main getInstance() {
+        return instance;
+    }
+
+    public Stage getStage() {
         return primaryStage;
     }
 
 
     public static void main(String[] args) {
-        launch(args);
+        Application.launch(Main.class, args);
     }
 }
