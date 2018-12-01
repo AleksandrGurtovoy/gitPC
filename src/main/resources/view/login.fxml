@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<BorderPane prefHeight="472.0" prefWidth="360.0" stylesheets="/media/styles/LoginStyle.css"
+            xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="service.LoginService">
+    <center>
+        <GridPane styleClass="background" alignment="top_center" hgap="8" style="-fx-padding: 40 0 0 0" vgap="8">
+            <children>
+
+                <Label text="Your GitHub login" GridPane.columnIndex="1" GridPane.rowIndex="7"/>
+                <TextField id="input" fx:id="usernameField" prefColumnCount="15" prefHeight="30.0" prefWidth="290.0"
+                           promptText="Hint text" GridPane.columnIndex="1" GridPane.rowIndex="8"/>
+                <Label text="Your password" GridPane.columnIndex="1" GridPane.rowIndex="11"/>
+                <PasswordField id="input" fx:id="passwordField" prefColumnCount="15" prefHeight="30.0" prefWidth="290.0"
+                               promptText="Hint text" GridPane.columnIndex="1" GridPane.rowIndex="12"/>
+                <Button fx:id="submitButton" onAction="#processLogin" prefHeight="26.0" prefWidth="288.0" text="Sign In"
+                        GridPane.columnIndex="1" GridPane.rowIndex="20"/>
+
+                <Label fx:id="errorText" style="-fx-text-fill: #ff0000;" GridPane.columnIndex="1"
+                       GridPane.rowIndex="15"/>
+                <ImageView fitHeight="150.0" fitWidth="298.0" pickOnBounds="true" preserveRatio="true" smooth="false"
+                           GridPane.columnIndex="1" GridPane.rowIndex="4">
+                    <image>
+                        <Image url="/media/gitPC.png"/>
+                    </image>
+                    <GridPane.margin>
+                        <Insets left="40.0" top="-40.0"/>
+                    </GridPane.margin>
+                </ImageView>
+
+            </children>
+            <columnConstraints>
+                <ColumnConstraints/>
+                <ColumnConstraints/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+                <RowConstraints/>
+            </rowConstraints>
+        </GridPane>
+    </center>
+</BorderPane>

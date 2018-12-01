@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gitPC.iml" filepath="$PROJECT_DIR$/.idea/modules/gitPC.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gitPC_main.iml" filepath="$PROJECT_DIR$/.idea/modules/gitPC_main.iml" group="gitPC" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/gitPC_test.iml" filepath="$PROJECT_DIR$/.idea/modules/gitPC_test.iml" group="gitPC" />
+    </modules>
+  </component>
+</project>
