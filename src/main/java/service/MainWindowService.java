@@ -5,14 +5,16 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.Clipboard;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.MouseButton;
+import javafx.scene.input.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import model.Repo;
 import model.User;
 import retrofit2.Call;
@@ -47,6 +49,8 @@ public class MainWindowService implements Initializable {
     private TableColumn<Repo, Long> forksColumn;
     @FXML
     private TextField searchField;
+    @FXML
+    private AnchorPane father;
 
     private List<String> urls = new ArrayList<>();
 
@@ -58,6 +62,7 @@ public class MainWindowService implements Initializable {
         User user = Main.getInstance().getUser();
         setUserData(user);
         setRightClickAction();
+        setActionF5();
         repos = getUserRepo(user);
         if (Objects.nonNull(repos)) {
             setUrlsToList(repos);
@@ -165,5 +170,18 @@ public class MainWindowService implements Initializable {
                 setColumnData(getRepoData(repos));
             }
         }
+    }
+
+    private void setActionF5() {
+        father.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                System.out.println(event.getCode());
+                if (event.getCode() == (KeyCode.F5)) {
+                    tableRepos.getItems().clear();
+                    setColumnData(getRepoData(repos));
+                }
+            }
+        });
     }
 }

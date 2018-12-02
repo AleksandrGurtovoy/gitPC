@@ -22,7 +22,7 @@ public class LoginService {
     private PasswordField passwordField;
 
     @FXML
-    private void processLogin(ActionEvent event) throws IOException {
+    public void processLogin(ActionEvent event) throws IOException {
         if (usernameField.getText().isEmpty() || passwordField.getText().isEmpty()) {
             errorText.setText("Please enter username and password");
             return;
@@ -36,12 +36,12 @@ public class LoginService {
                 e.printStackTrace();
             }
         } else {
-            Platform.runLater(() -> errorText.setText("User not found"));
+            Platform.runLater(() -> errorText.setText("Login or password is incorrect"));
         }
 
     }
 
-    private Response<User> getUserResponse() throws IOException {
+    public Response<User> getUserResponse() throws IOException {
         GitHubBuilder builder = new GitHubBuilder();
         String credential = usernameField.getText() + ":" + passwordField.getText();
         String basic = "Basic " + Base64.getEncoder().encodeToString(credential.getBytes());

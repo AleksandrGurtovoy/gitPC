@@ -15,7 +15,7 @@ public class GitHubBuilder {
                 .build();
     }
 
-    public service.GitHubService getService() {
-        return retrofit.create(service.GitHubService.class);
+    public GitHubService getService() {
+        return retrofit.create(GitHubService.class);
     }
 }
