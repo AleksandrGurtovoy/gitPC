@@ -32,6 +32,7 @@ public class Main extends Application {
     }
 
     public void gotoLogin(){
+        this.user = new User();
         try {
             replaceSceneContent("/view/login.fxml");
         } catch (Exception e) {

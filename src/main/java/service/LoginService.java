@@ -8,7 +8,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import model.User;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 import java.io.IOException;
@@ -22,21 +21,13 @@ public class LoginService {
     @FXML
     private PasswordField passwordField;
 
-
-    private MainWindowService mainWindowService = new MainWindowService();
-
     @FXML
     private void processLogin(ActionEvent event) throws IOException {
         if (usernameField.getText().isEmpty() || passwordField.getText().isEmpty()) {
             errorText.setText("Please enter username and password");
             return;
         }
-        GitHubBuilder builder = new GitHubBuilder();
-        String credential = usernameField.getText() + ":" + passwordField.getText();
-        String basic = "Basic " + Base64.getEncoder().encodeToString(credential.getBytes());
-
-        Call<User> userCall = builder.getService().getUser(basic);
-        Response<User> response = userCall.execute();
+        Response<User> response = getUserResponse();
         if (response.isSuccessful()) {
             User user = response.body();
             try {
@@ -48,6 +39,15 @@ public class LoginService {
             Platform.runLater(() -> errorText.setText("User not found"));
         }
 
+    }
+
+    private Response<User> getUserResponse() throws IOException {
+        GitHubBuilder builder = new GitHubBuilder();
+        String credential = usernameField.getText() + ":" + passwordField.getText();
+        String basic = "Basic " + Base64.getEncoder().encodeToString(credential.getBytes());
+
+        Call<User> userCall = builder.getService().getUser(basic);
+        return userCall.execute();
     }
 
 

@@ -1,6 +1,8 @@
 package model;
 
 ;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import lombok.ToString;
 
 @ToString
@@ -24,11 +26,11 @@ public class Repo {
     private
     String clone_url;
 
-    public Repo(){
+    public Repo() {
 
     }
 
-    public Repo(String name, String description, Long stargazers_count, Long watchers_count, Long forks_count){
+    public Repo(String name, String description, Long stargazers_count, Long watchers_count, Long forks_count) {
         this.name = name;
         this.description = description;
         this.stargazers_count = stargazers_count;
@@ -43,6 +45,10 @@ public class Repo {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public StringProperty nameProperty() {
+        return new SimpleStringProperty(name);
     }
 
     public String getDescription() {
@@ -83,5 +89,9 @@ public class Repo {
 
     public void setClone_url(String clone_url) {
         this.clone_url = clone_url;
+    }
+
+    public StringProperty cloneUrlProperty() {
+        return new SimpleStringProperty(clone_url);
     }
 }
