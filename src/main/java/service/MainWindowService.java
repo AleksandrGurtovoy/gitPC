@@ -45,8 +45,12 @@ public class MainWindowService implements Initializable {
     private TableColumn<Repo, Long> starsColumn;
     @FXML
     private TableColumn<Repo, Long> forksColumn;
+    @FXML
+    private TextField searchField;
 
     private List<String> urls = new ArrayList<>();
+
+    private List<Repo> repos = new ArrayList<>();
 
 
     @Override
@@ -54,7 +58,7 @@ public class MainWindowService implements Initializable {
         User user = Main.getInstance().getUser();
         setUserData(user);
         setRightClickAction();
-        List<Repo> repos = getUserRepo(user);
+        repos = getUserRepo(user);
         if (Objects.nonNull(repos)) {
             setUrlsToList(repos);
             setColumnData(getRepoData(repos));
@@ -113,27 +117,25 @@ public class MainWindowService implements Initializable {
     }
 
     @FXML
-    private void processExit(ActionEvent event) {
+    private void processExit() {
         Main.getInstance().gotoLogin();
     }
 
     private void setRightClickAction() {
         tableRepos.getSelectionModel().setCellSelectionEnabled(true);
+        ContextMenu cm = new ContextMenu();
+        MenuItem urlMenu = new MenuItem("Copy url to clipboard");
+        urlMenu.setOnAction(event -> {
+            final ClipboardContent clipboardContent = new ClipboardContent();
+            clipboardContent.putString(getUrlFromTable());
+            Clipboard.getSystemClipboard().setContent(clipboardContent);
+        });
+        cm.getItems().add(urlMenu);
+
         tableRepos.setOnMouseClicked(e -> {
             if (e.getButton() == MouseButton.SECONDARY) {
-                String url = new String();
-                ObservableList<TablePosition> positionList = tableRepos.getSelectionModel().getSelectedCells();
-
-                for (TablePosition position : positionList) {
-                    url = urls.get(position.getRow());
-                    System.out.println(url);
-                }
-
-                final ClipboardContent clipboardContent = new ClipboardContent();
-                clipboardContent.putString(url);
-                Clipboard.getSystemClipboard().setContent(clipboardContent);
+                cm.show(tableRepos, e.getScreenX(), e.getScreenY());
             }
-
         });
     }
 
@@ -143,4 +145,25 @@ public class MainWindowService implements Initializable {
         }
     }
 
+    private String getUrlFromTable() {
+        String url = "";
+        ObservableList<TablePosition> positionList = tableRepos.getSelectionModel().getSelectedCells();
+        for (TablePosition position : positionList) {
+            url = urls.get(position.getRow());
+        }
+        return url;
+    }
+
+    @FXML
+    private void searchProcess(ActionEvent event) {
+        for (Repo r : repos) {
+            if (r.getName().equals(searchField.getText())) {
+                tableRepos.getItems().clear();
+                tableRepos.getItems().add(r);
+            } else if (searchField.getText().isEmpty()) {
+                tableRepos.getItems().clear();
+                setColumnData(getRepoData(repos));
+            }
+        }
+    }
 }

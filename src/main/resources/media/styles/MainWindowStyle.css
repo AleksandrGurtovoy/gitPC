@@ -27,9 +27,9 @@
 .table-view {
     -fx-base: #1d1d1d;
     -fx-control-inner-background: #1d1d1d;
-    -fx-background-color: #1d1d1d;
-    -fx-table-cell-border-color: transparent;
-    -fx-table-header-border-color: transparent;
+    -fx-background-color: #7f151f;
+    -fx-table-cell-border-color: rgba(136, 22, 32, 0.01);
+    -fx-table-header-border-color: #701413;
     -fx-padding: 5;
 }
 
@@ -90,7 +90,7 @@
 }
 
 .text-field {
-    -fx-font-size: 12pt;
+    -fx-font-size: 10pt;
     -fx-font-family: "Segoe UI Semibold";
 }
 
