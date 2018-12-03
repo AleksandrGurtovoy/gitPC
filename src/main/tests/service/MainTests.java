@@ -9,8 +9,9 @@ public class MainTests {
     public void getUser_fail() {
         Assert.assertNotNull(Main.getInstance().getUser());
     }
+
     @Test
-    public void getInstance_fail(){
+    public void getInstance_fail() {
         Assert.assertNull(Main.getInstance());
     }
 }

@@ -41,11 +41,7 @@
     -fx-size: 35;
     -fx-border-width: 0 0 1 0;
     -fx-background-color: transparent;
-    -fx-border-color:
-            transparent
-            transparent
-            derive(-fx-base, 80%)
-            transparent;
+    -fx-border-color: transparent transparent derive(-fx-base, 80%) transparent;
     -fx-border-insets: 0 10 1 0;
 }
 
@@ -63,7 +59,7 @@
 
 .split-pane:horizontal > .split-pane-divider {
     -fx-border-color: transparent #701413 transparent #7f151f;
-    -fx-background-color: transparent, derive(#7f151f,20%);
+    -fx-background-color: transparent, derive(#7f151f, 20%);
 }
 
 .split-pane {
@@ -71,11 +67,11 @@
 }
 
 .menu-bar {
-    -fx-background-color: derive(#1d1d1d,20%);
+    -fx-background-color: derive(#1d1d1d, 20%);
 }
 
 .context-menu {
-    -fx-background-color: derive(#7f151f,50%);
+    -fx-background-color: derive(#7f151f, 50%);
 }
 
 .menu-bar .label {
@@ -138,5 +134,5 @@
 }
 
 .button:default:hover {
-    -fx-background-color: derive(-fx-focus-color,30%);
+    -fx-background-color: derive(-fx-focus-color, 30%);
 }

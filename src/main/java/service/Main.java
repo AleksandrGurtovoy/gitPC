@@ -12,8 +12,6 @@ public class Main extends Application {
     private static Main instance;
 
     private Stage primaryStage;
-    private Parent page;
-    private Scene scene;
     private User user;
 
     public Main() {
@@ -43,8 +41,8 @@ public class Main extends Application {
     }
 
     private void replaceSceneContent(String fxml) throws Exception {
-        page = FXMLLoader.load(Main.class.getResource(fxml), null, new JavaFXBuilderFactory());
-        scene = new Scene(page);
+        Parent page = FXMLLoader.load(Main.class.getResource(fxml), null, new JavaFXBuilderFactory());
+        Scene scene = new Scene(page);
         primaryStage.setScene(scene);
         primaryStage.sizeToScene();
         primaryStage.centerOnScreen();
@@ -57,11 +55,6 @@ public class Main extends Application {
     public User getUser() {
         return user;
     }
-
-    public Parent getParent() {
-        return page;
-    }
-
 
     public static void main(String[] args) {
         Application.launch(Main.class, args);

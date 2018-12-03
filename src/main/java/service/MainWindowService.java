@@ -1,20 +1,21 @@
 package service;
 
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.*;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import model.Repo;
 import model.User;
 import retrofit2.Call;
@@ -53,7 +54,6 @@ public class MainWindowService implements Initializable {
     private AnchorPane father;
 
     private List<String> urls = new ArrayList<>();
-
     private List<Repo> repos = new ArrayList<>();
 
 
@@ -63,6 +63,7 @@ public class MainWindowService implements Initializable {
         setUserData(user);
         setRightClickAction();
         setActionF5();
+        setActionEnter();
         repos = getUserRepo(user);
         if (Objects.nonNull(repos)) {
             setUrlsToList(repos);
@@ -70,7 +71,7 @@ public class MainWindowService implements Initializable {
         }
     }
 
-    private ObservableList<Repo> getRepoData(List<Repo> repos) {
+    public ObservableList<Repo> getRepoData(List<Repo> repos) {
         ObservableList<Repo> repoData = FXCollections.observableArrayList();
         for (Repo repo : repos) {
             repoData.add(new Repo(repo.getName(), repo.getDescription(),
@@ -80,15 +81,13 @@ public class MainWindowService implements Initializable {
     }
 
     private void setColumnData(ObservableList<Repo> repoData) {
-        final int[] number = {0};
         tableRepos.getItems().addAll(repoData);
-
         nameColumn.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getName()));
         deskColumn.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getDescription()));
         watchedColumn.setCellValueFactory(c -> new SimpleObjectProperty<>(c.getValue().getWatchers_count()));
         starsColumn.setCellValueFactory(c -> new SimpleObjectProperty<>(c.getValue().getStargazers_count()));
         forksColumn.setCellValueFactory(c -> new SimpleObjectProperty<>(c.getValue().getForks_count()));
-        numberColumn.setCellValueFactory(c -> new SimpleObjectProperty<>(number[0]++));
+        numberColumn.setCellValueFactory(param -> new ReadOnlyObjectWrapper(tableRepos.getItems().indexOf(param.getValue()) + 1 + ""));
     }
 
     private void setUserData(User user) {
@@ -130,6 +129,7 @@ public class MainWindowService implements Initializable {
         tableRepos.getSelectionModel().setCellSelectionEnabled(true);
         ContextMenu cm = new ContextMenu();
         MenuItem urlMenu = new MenuItem("Copy url to clipboard");
+
         urlMenu.setOnAction(event -> {
             final ClipboardContent clipboardContent = new ClipboardContent();
             clipboardContent.putString(getUrlFromTable());
@@ -173,14 +173,18 @@ public class MainWindowService implements Initializable {
     }
 
     private void setActionF5() {
-        father.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                System.out.println(event.getCode());
-                if (event.getCode() == (KeyCode.F5)) {
-                    tableRepos.getItems().clear();
-                    setColumnData(getRepoData(repos));
-                }
+        father.setOnKeyPressed(event -> {
+            if (event.getCode() == (KeyCode.F5)) {
+                tableRepos.getItems().clear();
+                setColumnData(getRepoData(repos));
+            }
+        });
+    }
+
+    private void setActionEnter() {
+        searchField.setOnKeyPressed(event -> {
+            if (event.getCode() == (KeyCode.ENTER)) {
+                searchProcess(null);
             }
         });
     }
